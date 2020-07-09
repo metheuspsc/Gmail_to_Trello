@@ -17,7 +17,7 @@ def get_mail_send_trello(x):
             starttls=False) as imbox:
 
         desired_mail = imbox.messages(unread=True,label='',subject=x,raw='Raw Gmail search syntax')
-        for uid, message in mails_desejados:
+        for uid, message in desired_mail:
 
             desc = message.subject
             html= (str(message.body))
@@ -29,19 +29,14 @@ def get_mail_send_trello(x):
 
             if x == 'Subject that goes to this board/list':
                 list_id = '' 
-                r = requests.post("https://api.trello.com/1/cards?key=" + \
-                              API_KEY + "&token=" + OAUTH_TOKEN + \
-                              "&name=" + desc + "&idList=" + \
-                              list_id + "&desc=" + \
-                              texto)
-
+                
             elif x == 'Subject that goes to this board/list':
-
                 list_id = ''
-                r = requests.post("https://api.trello.com/1/cards?key=" + \
+                
+            r = requests.post("https://api.trello.com/1/cards?key=" + \
                               API_KEY + "&token=" + OAUTH_TOKEN + \
                               "&name=" + desc + "&idList=" + \
                               list_id + "&desc=" + \
                               texto)
 
-[get_mail_send_trello(x) for x in subjects]
+[get_mail_send_trello(subject) for subject in subjects]
